@@ -23,7 +23,6 @@ module top(  input logic clk, input logic linetrace );
     logic                    reset;
 
     // Unit signals
-    logic update_en;
     logic update_val;
     logic[31:0] PC;
     logic prediction;
@@ -70,42 +69,87 @@ module top(  input logic clk, input logic linetrace );
         reset = 1;
         @(negedge clk);
         reset = 0;
-        //         upd     PC      upd  inc  dec         
-        //         val             ghr  ent  ent
+        //         upd  PC            upd   inc  dec         
+        //         val                ghr   ent  ent
         //
-        set_inputs(y,      32'd0,  n,   n,   n);
+        set_inputs(y,   32'hFFFFFFFF, n,    n,   n);
 
         $display("");
         $display("Waiting for inc/dec signal");
         delay( $urandom_range(0, 127) );
 
         @(negedge clk);
-        //           prd  ent  ent           
-        //                upp  low
+        //           prd  ent  ent  pht         
+        //                upp  low  idx
         //                rcd  rcd
-        test_outputs(n,   n,   y);
+        test_outputs(n,   n,   y,   11'b11111111111);
 
         $display("");
         $display("Received increment signal");
         @(negedge clk);
-        //         upd     PC      upd  inc  dec         
-        //         val             ghr  ent  ent
+        //         upd  PC            upd  inc  dec         
+        //         val                ghr    ent  ent
         //
-        set_inputs(y,      32'd0,  n,   y,   n);
-
-        @(negedge clk);
-        //           prd  ent  ent           
-        //                upp  low
-        //                rcd  rcd
-        test_outputs(n,   n,   n);
+        set_inputs(y,   32'hFFFFFFFF, y,    y,   n);
 
         $display("");
-        $display("Wait for update to propagate into counts array");
+        $display("GHR has changed, but PC XOR's it to all 1's");
         @(negedge clk);
-        //           prd  ent  ent           
-        //                upp  low
+        //           prd  ent  ent  pht         
+        //                upp  low  idx
         //                rcd  rcd
-        test_outputs(y,   n,   n);
+        test_outputs(n,   n,   y,   11'b11111111110);
+
+        //         upd  PC            upd   inc  dec         
+        //         val                ghr   ent  ent
+        //
+        set_inputs(y,   32'hFFFFFFFF, n,    n,   n);
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #2 Decrement entry if not reached limit
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 2: Do not decrement entry if reached limit");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+
+        $display("");
+        $display("Fill PHT and GHR");
+        for (int i = 0; i < 128; i++) begin
+            @(negedge clk);
+            //         upd  PC     upd   inc  dec         
+            //         val         ghr   ent  ent
+            //
+            set_inputs(y,   32'd0, y,    y,   n);
+        end
+        
+        @(negedge clk);
+        //           prd  ent  ent  pht       
+        //                upp  low  idx
+        //                rcd  rcd
+        test_outputs(n,   n,   n,   11'b11111111111);
+
+        $display("");
+        $display("Received decrement signal");
+        @(negedge clk);
+        //         upd  PC     upd   inc  dec         
+        //         val         ghr   ent  ent
+        //
+        set_inputs(n,   32'd0, y,    n,   y);
+
+        @(negedge clk);
+        //           prd  ent  ent  pht          
+        //                upp  low  idx
+        //                rcd  rcd
+        test_outputs(n,   n,   y,   11'b11111111110);
 
         delay( $urandom_range(0, 127) );
 
@@ -144,7 +188,8 @@ module top(  input logic clk, input logic linetrace );
     (
         input logic t_prediction,
         input logic t_entry_upper_reached,
-        input logic t_entry_lower_reached
+        input logic t_entry_lower_reached,
+        input logic [10:0] t_pht_index
     );
     begin
         assert(prediction == t_prediction) begin
@@ -163,6 +208,12 @@ module top(  input logic clk, input logic linetrace );
             $display("entry_lower_reached is correct.  Expected: %h, Actual: %h", t_entry_lower_reached,entry_lower_reached); pass();
         end else begin
             $display("entry_lower_reached is incorrect.  Expected: %h, Actual: %h", t_entry_lower_reached,entry_lower_reached); fail(); $finish();
+        end
+        
+        assert(DUT.pht_index == t_pht_index) begin
+            $display("pht_index is correct.  Expected: %h, Actual: %h", t_pht_index,DUT.pht_index); pass();
+        end else begin
+            $display("pht_index is incorrect.  Expected: %h, Actual: %h", t_pht_index,DUT.pht_index); fail(); $finish();
         end
         
     end

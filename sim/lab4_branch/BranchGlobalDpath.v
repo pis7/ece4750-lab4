@@ -10,7 +10,6 @@ module lab4_branch_BranchGlobalDpath
   input  logic         clk,
   input  logic         reset,
   input  logic update_val,
-  input  logic[31:0] PC,
   output logic prediction,
 
   // Status signals
