@@ -25,11 +25,11 @@ module lab4_branch_BranchBimodalDpath
 logic [PHT_size-1:0][1:0] counts;
 
 // PC index
-logic pc_index;
+logic [10:0] pc_index;
 assign pc_index = PC[$clog2(PHT_size)+1:2];
 
 // PHT entry update
-always_ff(@posedge clk) begin
+always_ff @(posedge clk) begin
   if (reset) begin
     counts <= {PHT_size{2'b0}};
   end
@@ -45,5 +45,3 @@ assign entry_lower_reached = counts[pc_index] == 2'b00;
 assign prediction = counts[pc_index][1]; // Prediction is the MSB of the PHT entry indexed by the PC
 
 endmodule
-
-`endif

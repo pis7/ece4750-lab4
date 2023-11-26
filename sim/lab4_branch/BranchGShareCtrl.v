@@ -1,8 +1,8 @@
 //=========================================================================
-// Branch Predictor Global Design Control Unit
+// Branch Predictor GShare Design Control Unit
 //=========================================================================
 
-module lab4_branch_BranchGlobalCtrl
+module lab4_branch_BranchGShareCtrl
 #(
     parameter PHT_size  = 2048
 )

@@ -30,11 +30,11 @@ logic entry_upper_reached;
 logic entry_lower_reached;
 
 // Control signals
-logic update_gbr;
+logic update_ghr;
 logic increment_entry;
 logic decrement_entry;
 
-lab4_branch_BranchGloballCtrl
+lab4_branch_BranchGlobalCtrl
 #(
   .PHT_size(PHT_size)
 )

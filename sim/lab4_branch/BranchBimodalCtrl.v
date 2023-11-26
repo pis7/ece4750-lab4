@@ -21,52 +21,65 @@ module lab4_branch_BranchBimodalCtrl
     output logic decrement_entry
 );
 
-localparam IDLE = 1'b0;
-localparam UPDATE = 1'b1;
-
-logic state;
-logic nextState;
-
-// State flip flop
-always_ff(@posedge clk) begin
-    if(reset) state <= IDLE;
-    else state <= nextState;
-end
-
-// Next state logic
 always_comb begin
-    if(reset) nextState = IDLE;
-    case(state)
-        IDLE: begin
-            if (update_en) nextState = UPDATE;
-            else nextState = IDLE;
-        end
-        UPDATE: begin
-            if (!update_en) nextState = IDLE;
-            else nextState = UPDATE;
-        end
-        DEFAULT: begin
-            nextState = IDLE;
-        end
-    endcase
+    if (reset) begin
+        increment_entry = 1'b0;
+        decrement_entry = 1'b0;
+    end else if (update_en) begin
+        increment_entry = update_val && !entry_upper_reached;
+        decrement_entry = !update_val && !entry_lower_reached;
+    end else begin
+        increment_entry = 1'b0;
+        decrement_entry = 1'b0;
+    end
 end
 
-// Output logic
-always_comb begin
-    case(state)
-        IDLE: begin
-            increment_entry = 1'b0;
-            decrement_entry = 1'b0;
-        end
-        UPDATE: begin
-            increment_entry = update_val && !entry_upper_reached;
-            decrement_entry = !update_val && !entry_lower_reached;
-        end
-        DEFAULT: begin
-            increment_entry = 1'b0;
-            decrement_entry = 1'b0;
-        end
-    endcase
-end
+// localparam IDLE = 1'b0;
+// localparam UPDATE = 1'b1;
+
+// logic state;
+// logic nextState;
+
+// // State flip flop
+// always_ff @(posedge clk) begin
+//     if(reset) state <= IDLE;
+//     else state <= nextState;
+// end
+
+// // Next state logic
+// always_comb begin
+//     if(reset) nextState = IDLE;
+//     case(state)
+//         IDLE: begin
+//             if (update_en) nextState = UPDATE;
+//             else nextState = IDLE;
+//         end
+//         UPDATE: begin
+//             if (!update_en) nextState = IDLE;
+//             else nextState = UPDATE;
+//         end
+//         default: begin
+//             nextState = IDLE;
+//         end
+//     endcase
+// end
+
+// // Output logic
+// always_comb begin
+//     case(state)
+//         IDLE: begin
+//             increment_entry = 1'b0;
+//             decrement_entry = 1'b0;
+//         end
+//         UPDATE: begin
+//             increment_entry = update_val && !entry_upper_reached;
+//             decrement_entry = !update_val && !entry_lower_reached;
+//         end
+//         default: begin
+//             increment_entry = 1'b0;
+//             decrement_entry = 1'b0;
+//         end
+//     endcase
+// end
 
 endmodule
