@@ -21,12 +21,15 @@ module lab4_branch_BranchBimodalDpath
   input logic decrement_entry
 );
 
+// PC index length
+localparam pc_index_length = $clog2(PHT_size);
+
 // Counts array
 logic [PHT_size-1:0][1:0] counts;
 
 // PC index
 logic [10:0] pc_index;
-assign pc_index = PC[$clog2(PHT_size)+1:2];
+assign pc_index = PC[pc_index_length+1:2];
 
 // PHT entry update
 always_ff @(posedge clk) begin
