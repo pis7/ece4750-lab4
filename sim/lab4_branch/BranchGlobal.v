@@ -5,9 +5,6 @@
 `ifndef LAB4_BRANCH_BRANCH_GLOBAL_V
 `define LAB4_BRANCH_BRANCH_GLOBAL_V
 
-`include "vc/mem-msgs.v"
-`include "vc/queues.v"
-`include "vc/trace.v"
 `include "BranchGlobalCtrl.v"
 `include "BranchGlobalDpath.v"
 

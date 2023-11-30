@@ -28,7 +28,7 @@ localparam pc_index_length = $clog2(PHT_size);
 logic [PHT_size-1:0][1:0] counts;
 
 // PC index
-logic [10:0] pc_index;
+logic [pc_index_length-1:0] pc_index;
 assign pc_index = PC[pc_index_length+1:2];
 
 // PHT entry update

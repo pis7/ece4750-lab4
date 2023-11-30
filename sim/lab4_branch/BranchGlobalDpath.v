@@ -29,7 +29,7 @@ localparam ghr_length = $clog2(PHT_size);
 logic [PHT_size-1:0][1:0] counts;
 
 // Global register
-logic [$clog2(PHT_size)-1:0] ghr;
+logic [ghr_length-1:0] ghr;
 
 // PHT entry update
 always_ff @(posedge clk) begin

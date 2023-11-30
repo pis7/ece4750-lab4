@@ -7,7 +7,7 @@
 `timescale 1ps/1ps
 
 `ifndef DESIGN
-  `define DESIGN GShare
+  `define DESIGN BranchGShare
 `endif
 
 `include "BranchGShareDpath.v"

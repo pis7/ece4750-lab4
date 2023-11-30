@@ -5,9 +5,6 @@
 `ifndef LAB4_BRANCH_BRANCH_GSHARE_V
 `define LAB4_BRANCH_BRANCH_GSHARE_V
 
-`include "vc/mem-msgs.v"
-`include "vc/queues.v"
-`include "vc/trace.v"
 `include "BranchGShareCtrl.v"
 `include "BranchGShareDpath.v"
 
@@ -34,7 +31,7 @@ logic update_ghr;
 logic increment_entry;
 logic decrement_entry;
 
-lab4_branch_BranchGlobalCtrl
+lab4_branch_BranchGShareCtrl
 #(
   .PHT_size(PHT_size)
 )
@@ -43,7 +40,7 @@ ctrl
   .*
 );
 
-lab4_branch_BranchGlobalDpath
+lab4_branch_BranchGShareDpath
 #(
   .PHT_size(PHT_size)
 )

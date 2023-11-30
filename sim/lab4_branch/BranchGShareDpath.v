@@ -33,11 +33,11 @@ logic [PHT_size-1:0][1:0] counts;
 logic [ghr_length-1:0] ghr;
 
 // PC index
-logic [10:0] pc_index;
+logic [ghr_length-1:0] pc_index;
 assign pc_index = PC[ghr_length+1:2];
 
 // PC XOR GHR
-logic [10:0] pht_index;
+logic [ghr_length-1:0] pht_index;
 assign pht_index = pc_index ^ ghr;
 
 // PHT entry update

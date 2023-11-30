@@ -7,7 +7,7 @@
 `timescale 1ps/1ps
 
 `ifndef DESIGN
-  `define DESIGN Bimodal
+  `define DESIGN BranchBimodal
 `endif
 
 `include "BranchBimodalDpath.v"

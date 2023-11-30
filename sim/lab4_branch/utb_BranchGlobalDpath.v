@@ -7,7 +7,7 @@
 `timescale 1ps/1ps
 
 `ifndef DESIGN
-  `define DESIGN Global
+  `define DESIGN BranchGlobal
 `endif
 
 `include "BranchGlobalDpath.v"
