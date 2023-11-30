@@ -618,7 +618,7 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #10: Series of branches, pattern T -> NT -> NT -> T
+        // Unit Testing #10: Series of branches, pattern T -> NT -> T -> NT
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 

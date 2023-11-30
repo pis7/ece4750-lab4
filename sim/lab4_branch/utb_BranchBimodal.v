@@ -520,13 +520,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #12: Loop with 5 branches, always taken
+        // Unit Testing #12: Loop with 5 different branches, always taken
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 12: Loop with 5 branches, always taken");
+        $display("Unit Test 12: Loop with 5 different branches, always taken");
         $display("---------------------------------------");
 
         reset = 1;
@@ -611,13 +611,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #13: Loop with 5 branches, always not taken
+        // Unit Testing #13: Loop with 5 different branches, always not taken
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 13: Loop with 5 branches, always not taken");
+        $display("Unit Test 13: Loop with 5 different branches, always not taken");
         $display("---------------------------------------");
 
         reset = 1;
@@ -653,13 +653,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #14: Loop with 5 branches, alternating between taken and not taken
+        // Unit Testing #14: Loop with 4 different branches, alternating between taken and not taken
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 14: Loop with 5 branches, alternating between taken and not taken");
+        $display("Unit Test 14: Loop with 4 different branches, alternating between taken and not taken");
         $display("---------------------------------------");
 
         reset = 1;
@@ -671,7 +671,6 @@ module top(  input logic clk, input logic linetrace );
         thisPC2 = 4;
         thisPC3 = 20;
         thisPC4 = 200;
-        thisPC5 = 252;
 
         // Branch 1: Predict NT on counter = 00, update with T
         predict_and_update(n, y, thisPC1);
@@ -684,9 +683,6 @@ module top(  input logic clk, input logic linetrace );
 
         // Branch 4: Predict NT on counter = 00, update with NT
         predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
 
 
 
@@ -701,9 +697,6 @@ module top(  input logic clk, input logic linetrace );
 
         // Branch 4: Predict NT on counter = 00, update with NT
         predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC5);
 
 
 
@@ -719,8 +712,7 @@ module top(  input logic clk, input logic linetrace );
         // Branch 4: Predict NT on counter = 00, update with NT
         predict_and_update(n, n, thisPC4);
 
-        // Branch 5: Predict NT on counter = 10, update with T
-        predict_and_update(y, y, thisPC5);
+        
 
         for (int i = 0; i < 20; i++) begin
 
@@ -735,21 +727,18 @@ module top(  input logic clk, input logic linetrace );
 
             // Branch 4: Predict NT on counter = 00, update with NT
             predict_and_update(n, n, thisPC4);
-
-            // Branch 5: Predict NT on counter = 11, update with T
-            predict_and_update(y, y, thisPC5);
         end
 
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #15: Loop with 5 branches, pattern T -> T -> NT
+        // Unit Testing #15: Loop with 3 different branches, pattern T -> T -> NT
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 15: Loop with 5 branches, pattern T -> T -> NT");
+        $display("Unit Test 15: Loop with 3 different branches, pattern T -> T -> NT");
         $display("---------------------------------------");
 
         reset = 1;
@@ -760,8 +749,6 @@ module top(  input logic clk, input logic linetrace );
         thisPC1 = 0;
         thisPC2 = 4;
         thisPC3 = 20;
-        thisPC4 = 200;
-        thisPC5 = 252;
 
         // Branch 1: Predict NT on counter = 00, update with T
         predict_and_update(n, y, thisPC1);
@@ -772,623 +759,275 @@ module top(  input logic clk, input logic linetrace );
         // Branch 3: Predict NT on counter = 00, update with NT
         predict_and_update(n, n, thisPC3);
 
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC5);
-
 
 
         // Branch 1: Predict NT on counter = 01, update with T
         predict_and_update(n, y, thisPC1);
 
         // Branch 2: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC2);
-
-        // Branch 3: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC5);
-
-
-
-        // Branch 1: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC1);
-
-        // Branch 2: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC4);
-
-        // Branch 5: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict T on counter = 11, update with NT
-        predict_and_update(y, n, thisPC2);
-
-        // Branch 3: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict T on counter = 11, update with NT
-        predict_and_update(y, n, thisPC5);
-
-        delay( $urandom_range(0, 127) );
-
-        //--------------------------------------------------------------------
-        // Unit Testing #16: Loop with 5 branches, pattern NT -> NT -> T
-        //--------------------------------------------------------------------
-        // Initalize all the signal inital values.
-
-        $display("");
-        $display("---------------------------------------");
-        $display("Unit Test 16: Loop with 5 branches, pattern NT -> NT -> T");
-        $display("---------------------------------------");
-
-        reset = 1;
-        @(negedge clk);
-        reset = 0;
-
-        // Unique PHT indices
-        thisPC1 = 0;
-        thisPC2 = 4;
-        thisPC3 = 20;
-        thisPC4 = 200;
-        thisPC5 = 252;
-
-        // Branch 1: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with T
         predict_and_update(n, y, thisPC2);
 
         // Branch 3: Predict NT on counter = 00, update with NT
         predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
-        delay( $urandom_range(0, 127) );
-
-        //--------------------------------------------------------------------
-        // Unit Testing #17: Loop with 5 branches, pattern T -> T -> T -> NT
-        //--------------------------------------------------------------------
-        // Initalize all the signal inital values.
-
-        $display("");
-        $display("---------------------------------------");
-        $display("Unit Test 17: Loop with 5 branches, pattern T -> T -> T -> NT");
-        $display("---------------------------------------");
-
-        reset = 1;
-        @(negedge clk);
-        reset = 0;
-
-        // Unique PHT indices
-        thisPC1 = 0;
-        thisPC2 = 4;
-        thisPC3 = 20;
-        thisPC4 = 200;
-        thisPC5 = 252;
-
-        // Branch 1: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC5);
 
 
 
         // Branch 1: Predict T on counter = 10, update with T
         predict_and_update(y, y, thisPC1);
 
-        // Branch 2: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC2);
+        // Branch 2: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC2);
+
+        // Branch 3: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC3);
+
+        for (int i = 0; i < 20; i++) begin
+
+            // Branch 1: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC1);
+
+            // Branch 2: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC2);
+
+            // Branch 3: Predict NT on counter = 10, update with NT
+            predict_and_update(n, n, thisPC3);
+
+        end
+        
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #16: Loop with 3 different branches, pattern NT -> NT -> T
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 16: Loop with 3 different branches, pattern NT -> NT -> T");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+
+        // Unique PHT indices
+        thisPC1 = 0;
+        thisPC2 = 4;
+        thisPC3 = 20;
+
+        // Branch 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
 
         // Branch 3: Predict NT on counter = 00, update with T
         predict_and_update(n, y, thisPC3);
 
-        // Branch 4: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC5);
 
 
+        // Branch 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC1);
 
-        // Branch 1: Predict T on counter = 11, update with NT
-        predict_and_update(y, n, thisPC1);
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // Branch 3: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC3);
+
+
+
+        // Branch 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // Branch 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC3);
+
+        for (int i = 0; i < 20; i++) begin
+
+            // Branch 1: Predict NT on counter = 00, update with NT
+            predict_and_update(n, n, thisPC1);
+
+            // Branch 2: Predict NT on counter = 00, update with NT
+            predict_and_update(n, n, thisPC2);
+
+            // Branch 3: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #17: Loop with 4 different branches, pattern T -> T -> T -> NT
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 17: Loop with 4 different branches, pattern T -> T -> T -> NT");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+
+        // Unique PHT indices
+        thisPC1 = 0;
+        thisPC2 = 4;
+        thisPC3 = 20;
+        thisPC4 = 200;
+
+        // Branch 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC2);
+
+        // Branch 3: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // Branch 4: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+
+
+
+        // Branch 1: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC1);
 
         // Branch 2: Predict NT on counter = 01, update with T
         predict_and_update(n, y, thisPC2);
 
         // Branch 3: Predict NT on counter = 01, update with T
         predict_and_update(n, y, thisPC3);
+
+        // Branch 4: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+
+
+
+        // Branch 1: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC1);
+
+        // Branch 2: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC2);
+
+        // Branch 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // Branch 4: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+
+
+
+        for (int i = 0; i < 20; i++) begin
+
+            // Branch 1: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC1);
+
+            // Branch 2: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC2);
+
+            // Branch 3: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+            // Branch 4: Predict T on counter = 00, update with NT
+            predict_and_update(n, n, thisPC4);
+
+        end
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #18: Loop with 4 different branches, pattern NT -> NT -> NT -> T
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 18: Loop with 4 different branches, pattern NT -> NT -> NT -> T");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+
+        // Unique PHT indices
+        thisPC1 = 0;
+        thisPC2 = 4;
+        thisPC3 = 20;
+        thisPC4 = 200;
+
+        // Branch 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // Branch 3: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC3);
+
+        // Branch 4: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC4);
+
+
+
+        // Branch 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // Branch 3: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC3);
+
+        // Branch 4: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC4);
+
+
+        // Branch 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // Branch 3: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC3);
 
         // Branch 4: Predict T on counter = 10, update with T
         predict_and_update(y, y, thisPC4);
 
-        // Branch 5: Predict T on counter = 11, update with NT
-        predict_and_update(y, n, thisPC5);
 
 
-
-        // Branch 1: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC1);
-
-        // Branch 2: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC2);
-
-        // Branch 3: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC3);
-
-        // Branch 4: Predict T on counter = 11, update with NT
-        predict_and_update(y, n, thisPC4);
-
-        // Branch 5: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC5);
-
-        delay( $urandom_range(0, 127) );
-
-        //--------------------------------------------------------------------
-        // Unit Testing #18: Loop with 5 branches, pattern NT -> NT -> NT -> T
-        //--------------------------------------------------------------------
-        // Initalize all the signal inital values.
-
-        $display("");
-        $display("---------------------------------------");
-        $display("Unit Test 18: Loop with 5 branches, pattern NT -> NT -> NT -> T");
-        $display("---------------------------------------");
-
-        reset = 1;
-        @(negedge clk);
-        reset = 0;
-
-        // Unique PHT indices
-        thisPC1 = 0;
-        thisPC2 = 4;
-        thisPC3 = 20;
-        thisPC4 = 200;
-        thisPC5 = 252;
-
-        // Branch 1: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
-
-
-        // Branch 1: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC5);
-
-        delay( $urandom_range(0, 127) );
-
-        //--------------------------------------------------------------------
-        // Unit Testing #19: Loop with 5 branches, pattern T -> NT -> NT -> T
-        //--------------------------------------------------------------------
-        // Initalize all the signal inital values.
-
-        $display("");
-        $display("---------------------------------------");
-        $display("Unit Test 19: Loop with 5 branches, pattern T -> NT -> NT -> T");
-        $display("---------------------------------------");
-
-        reset = 1;
-        @(negedge clk);
-        reset = 0;
-
-        // Unique PHT indices
-        thisPC1 = 0;
-        thisPC2 = 4;
-        thisPC3 = 20;
-        thisPC4 = 200;
-        thisPC5 = 252;
-
-        // Branch 1: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
-        
-
-        // Branch 1: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC5);
-
-        
-
-        // Branch 1: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC5);
-
-        
-
-        // Branch 1: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC2);
-
-        // Branch 3: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
-        
-
-        // Branch 1: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC5);
-
-        delay( $urandom_range(0, 127) );
-
-        //--------------------------------------------------------------------
-        // Unit Testing #20: Loop with 5 branches, pattern T -> NT -> NT -> T
-        //--------------------------------------------------------------------
-        // Initalize all the signal inital values.
-
-        $display("");
-        $display("---------------------------------------");
-        $display("Unit Test 20: Loop with 5 branches, pattern T -> NT -> T -> NT");
-        $display("---------------------------------------");
-
-        reset = 1;
-        @(negedge clk);
-        reset = 0;
-
-        // Unique PHT indices
-        thisPC1 = 0;
-        thisPC2 = 4;
-        thisPC3 = 20;
-        thisPC4 = 200;
-        thisPC5 = 252;
-
-        // Branch 1: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC1);
-
-        // Branch 2: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
-        
         for (int i = 0; i < 20; i++) begin
 
-            // Branch 1: Predict NT on counter = 01, update with NT
+            // Branch 1: Predict NT on counter = 00, update with NT
             predict_and_update(n, n, thisPC1);
 
-            // Branch 2: Predict NT on counter = 00, update with T
-            predict_and_update(n, y, thisPC2);
-
-            // Branch 3: Predict NT on counter = 01, update with NT
-            predict_and_update(n, n, thisPC3);
-
-            // Branch 4: Predict NT on counter = 00, update with T
-            predict_and_update(n, y, thisPC4);
-
-            // Branch 5: Predict NT on counter = 01, update with NT
-            predict_and_update(n, n, thisPC5);
-
-
-
-            // Branch 1: Predict NT on counter = 00, update with T
-            predict_and_update(n, y, thisPC1);
-
-            // Branch 2: Predict NT on counter = 01, update with NT
+            // Branch 2: Predict NT on counter = 00, update with NT
             predict_and_update(n, n, thisPC2);
 
-            // Branch 3: Predict NT on counter = 00, update with T
-            predict_and_update(n, y, thisPC3);
+            // Branch 3: Predict NT on counter = 00, update with NT
+            predict_and_update(n, n, thisPC3);
 
-            // Branch 4: Predict NT on counter = 01, update with NT
-            predict_and_update(n, n, thisPC4);
-
-            // Branch 5: Predict NT on counter = 00, update with T
-            predict_and_update(n, y, thisPC5);
+            // Branch 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC4);
 
         end
 
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #21: Branches with PHT conflicts, pattern T -> T -> NT
+        // Unit Testing #19: Loop with 4 different branches, pattern T -> NT -> NT -> T
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 21: Branches with PHT conflicts, pattern T -> T -> NT");
+        $display("Unit Test 19: Loop with 4 different branches, pattern T -> NT -> NT -> T");
         $display("---------------------------------------");
 
         reset = 1;
@@ -1397,16 +1036,15 @@ module top(  input logic clk, input logic linetrace );
 
         // Unique PHT indices
         thisPC1 = 0;
-        thisPC2 = 2097152; // Conflicts with thisPC1
+        thisPC2 = 4;
         thisPC3 = 20;
         thisPC4 = 200;
-        thisPC5 = 252;
 
         // Branch 1: Predict NT on counter = 00, update with T
         predict_and_update(n, y, thisPC1);
 
-        // Branch 2: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC2);
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
 
         // Branch 3: Predict NT on counter = 00, update with NT
         predict_and_update(n, n, thisPC3);
@@ -1414,76 +1052,187 @@ module top(  input logic clk, input logic linetrace );
         // Branch 4: Predict NT on counter = 00, update with T
         predict_and_update(n, y, thisPC4);
 
-        // Branch 5: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC5);
-
         
 
-        // Branch 1: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC1);
+        // Branch 1: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC1);
 
-        // Branch 2: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC2);
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
 
-        // Branch 3: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 01, update with NT
-        predict_and_update(n, n, thisPC4);
-
-        // Branch 5: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC5);
-
-        
-
-        // Branch 1: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC1);
-
-        // Branch 2: Predict T on counter = 11, update with NT
-        predict_and_update(y, n, thisPC2);
-
-        // Branch 3: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC3);
-
-        // Branch 4: Predict NT on counter = 00, update with T
-        predict_and_update(n, y, thisPC4);
-
-        // Branch 5: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC5);
-
-        
-
-        // Branch 1: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC1);
-
-        // Branch 2: Predict T on counter = 11, update with T
-        predict_and_update(y, y, thisPC2);
-
-        // Branch 3: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC3);
+        // Branch 3: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC3);
 
         // Branch 4: Predict NT on counter = 01, update with T
         predict_and_update(n, y, thisPC4);
 
-        // Branch 5: Predict NT on counter = 01, update with T
-        predict_and_update(n, y, thisPC5);
+        
+
+        // Branch 1: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // Branch 3: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC3);
+
+        // Branch 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC4);
 
         
 
-        // Branch 1: Predict T on counter = 11, update with NT
-        predict_and_update(y, n, thisPC1);
+        for (int i = 0; i < 20; i++) begin
 
-        // Branch 2: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC2);
+            // Branch 1: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC1);
+
+            // Branch 2: Predict NT on counter = 00, update with NT
+            predict_and_update(n, n, thisPC2);
+
+            // Branch 3: Predict NT on counter = 00, update with NT
+            predict_and_update(n, n, thisPC3);
+
+            // Branch 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC4);
+
+        end
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #20: Loop with 4 different branches, pattern T -> NT -> T -> NT
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 20: Loop with 4 different branches, pattern T -> NT -> T -> NT");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+
+        // Unique PHT indices
+        thisPC1 = 0;
+        thisPC2 = 4;
+        thisPC3 = 20;
+        thisPC4 = 200;
+        thisPC5 = 252;
+
+        // Branch 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // Branch 3: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // Branch 4: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        
+
+        // Branch 1: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
 
         // Branch 3: Predict NT on counter = 01, update with T
         predict_and_update(n, y, thisPC3);
 
-        // Branch 4: Predict T on counter = 10, update with NT
-        predict_and_update(y, n, thisPC4);
+        // Branch 4: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
 
-        // Branch 5: Predict T on counter = 10, update with T
-        predict_and_update(y, y, thisPC5);
+        
+
+        // Branch 1: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC1);
+
+        // Branch 2: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // Branch 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // Branch 4: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        
+        for (int i = 0; i < 20; i++) begin
+
+            // Branch 1: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC1);
+
+            // Branch 2: Predict NT on counter = 00, update with NT
+            predict_and_update(n, n, thisPC2);
+
+            // Branch 3: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+            // Branch 4: Predict NT on counter = 00, update with NT
+            predict_and_update(n, n, thisPC4);
+
+        end
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #21: 3 branches with PHT conflicts, pattern T -> T -> NT
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 21: 3 branches with PHT conflicts, pattern T -> T -> NT");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+
+        // Conflicting PHT indices
+        thisPC1 = 0;
+        thisPC2 = 2097152;
+        thisPC3 = 2162688;
+
+        // Branch 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC2);
+
+        // Branch 3: Predict T on counter = 10, update with NT
+        predict_and_update(y, n, thisPC3);
+
+        
+
+        // Branch 1: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 2: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC2);
+
+        // Branch 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC3);
+
+        
+
+        for (int i = 0; i < 20; i++) begin
+
+            // Branch 1: Predict T on counter = 10, update with T
+            predict_and_update(y, y, thisPC1);
+
+            // Branch 2: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC2);
+
+            // Branch 3: Predict T on counter = 11, update with NT
+            predict_and_update(y, n, thisPC3);
+
+        end
 
         delay( $urandom_range(0, 127) );
 
