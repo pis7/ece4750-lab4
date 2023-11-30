@@ -73,13 +73,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #2: Loop with single branch, always taken
+        // Unit Testing #2: Series of branches, always taken
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 2: Loop with single branch, always taken");
+        $display("Unit Test 2: Series of branches, always taken");
         $display("---------------------------------------");
 
         reset = 1;
@@ -103,13 +103,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
         
         //--------------------------------------------------------------------
-        // Unit Testing #3: Loop with series of branches, always not taken
+        // Unit Testing #3: Series of branches, always not taken
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 3: Loop with series of branches, always not taken");
+        $display("Unit Test 3: Series of branches, always not taken");
         $display("---------------------------------------");
 
         reset = 1;
@@ -126,13 +126,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #4: Loop with series of branches, alternating between taken and not taken, counter has MSB = 0
+        // Unit Testing #4: Series of branches, alternating between taken and not taken, counter has MSB = 0
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 4: Loop with series of branches, alternating between taken and not taken, counter has MSB = 0");
+        $display("Unit Test 4: Series of branches, alternating between taken and not taken, counter has MSB = 0");
         $display("---------------------------------------");
 
         reset = 1;
@@ -191,13 +191,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #5: Loop with series of branches, pattern T -> T -> NT
+        // Unit Testing #5: Series of branches, pattern T -> T -> NT
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 5: Loop with series of branches, pattern T -> T -> NT");
+        $display("Unit Test 5: Series of branches, pattern T -> T -> NT");
         $display("---------------------------------------");
 
         reset = 1;
@@ -273,13 +273,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #6: Loop with series of branches, pattern NT -> NT -> T
+        // Unit Testing #6: Series of branches, pattern NT -> NT -> T
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 6: Loop with series of branches, pattern NT -> NT -> T");
+        $display("Unit Test 6: Series of branches, pattern NT -> NT -> T");
         $display("---------------------------------------");
 
         reset = 1;
@@ -355,13 +355,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #7: Loop with series of branches, pattern T -> T -> T -> NT
+        // Unit Testing #7: Series of branches, pattern T -> T -> T -> NT
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 7: Loop with series of branches, pattern T -> T -> T -> NT");
+        $display("Unit Test 7: Series of branches, pattern T -> T -> T -> NT");
         $display("---------------------------------------");
 
         reset = 1;
@@ -447,13 +447,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #8: Loop with series of branches, pattern NT -> NT -> NT -> T
+        // Unit Testing #8: Series of branches, pattern NT -> NT -> NT -> T
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 8: Loop with series of branches, pattern NT -> NT -> NT -> T");
+        $display("Unit Test 8: Series of branches, pattern NT -> NT -> NT -> T");
         $display("---------------------------------------");
 
         reset = 1;
@@ -527,13 +527,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #9: Loop with series of branches, pattern T -> NT -> NT -> T
+        // Unit Testing #9: Series of branches, pattern T -> NT -> NT -> T
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 9: Loop with series of branches, pattern T -> NT -> NT -> T");
+        $display("Unit Test 9: Series of branches, pattern T -> NT -> NT -> T");
         $display("---------------------------------------");
 
         reset = 1;
@@ -618,13 +618,13 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #10: Loop with series of branches, pattern T -> NT -> NT -> T
+        // Unit Testing #10: Series of branches, pattern T -> NT -> NT -> T
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 10: Loop with series of branches, pattern T -> NT -> T -> NT");
+        $display("Unit Test 10: Series of branches, pattern T -> NT -> T -> NT");
         $display("---------------------------------------");
 
         reset = 1;
@@ -727,6 +727,7 @@ module top(  input logic clk, input logic linetrace );
         //
         set_inputs(n,   n);
 
+        @(negedge clk);
         //           prd
         test_outputs(t_predict);
 
