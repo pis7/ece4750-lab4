@@ -108,7 +108,7 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #2 Decrement entry if not reached limit
+        // Unit Testing #2 Do not decrement entry if reached limit
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 

@@ -106,7 +106,7 @@ module top(  input logic clk, input logic linetrace );
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 2: Update decrement entry,at lower limit");
+        $display("Unit Test 2: Update decrement entry, at lower limit");
         $display("---------------------------------------");
 
         reset = 1;

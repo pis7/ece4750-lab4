@@ -2,6 +2,8 @@
 // Branch Predictor Bimodal Design
 //=========================================================================
 
+/* verilator lint_off WIDTHCONCAT */
+
 `ifndef LAB4_BRANCH_BRANCH_BIMODAL_V
 `define LAB4_BRANCH_BRANCH_BIMODAL_V
 
@@ -50,3 +52,5 @@ dpath
 endmodule
 
 `endif
+
+/* verilator lint_on WIDTHCONCAT */

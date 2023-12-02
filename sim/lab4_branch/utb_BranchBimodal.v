@@ -52,6 +52,7 @@ module top(  input logic clk, input logic linetrace );
     int unsigned thisPC3;
     int unsigned thisPC4;
     int unsigned thisPC5;
+    int unsigned thisPC6;
 
     initial begin
 
@@ -1119,7 +1120,6 @@ module top(  input logic clk, input logic linetrace );
         thisPC2 = 4;
         thisPC3 = 20;
         thisPC4 = 200;
-        thisPC5 = 252;
 
         // Branch 1: Predict NT on counter = 00, update with T
         predict_and_update(n, y, thisPC1);
@@ -1233,6 +1233,460 @@ module top(  input logic clk, input logic linetrace );
             predict_and_update(y, n, thisPC3);
 
         end
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #22: 3 nested loops
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 22: 3 nested loops");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+
+        // Unique PHT indices
+        thisPC1 = 0;
+        thisPC2 = 4;
+        thisPC3 = 20;
+
+        // Structure ------
+        // --- Loop (PC) 1 (3 iterations)
+        //     |__Loop (PC) 2 (3 iterations)
+        //       |__Loop (PC) 3 (4 iterations)
+
+        // Loop 1 it 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // --- Loop 2 it 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC2);
+
+        // ------ Loop 3 it 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // ------ Loop 3 it 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // ------ Loop 3 it 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Loop 2 it 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC2);
+
+        for (int i = 0; i < 4; i++) begin
+
+            // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+
+        // --- Loop 2 it 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC2);
+
+        for (int i = 0; i < 4; i++) begin
+
+            // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+ 
+        // Loop 1 it 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // --- Loop 2 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC2);
+
+        for (int i = 0; i < 4; i++) begin
+
+            // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+
+        // --- Loop 2 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC2);
+
+        for (int i = 0; i < 4; i++) begin
+
+            // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+
+        // --- Loop 2 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC2);
+
+        for (int i = 0; i < 4; i++) begin
+
+            // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+ 
+        // Loop 1 it 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC1);
+
+        // --- Loop 2 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC2);
+
+        for (int i = 0; i < 4; i++) begin
+
+            // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+
+        // --- Loop 2 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC2);
+
+        for (int i = 0; i < 4; i++) begin
+
+            // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+
+        // --- Loop 2 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC2);
+
+        for (int i = 0; i < 4; i++) begin
+
+            // ------ Loop 3 it 4: Predict T on counter = 11, update with T
+            predict_and_update(y, y, thisPC3);
+
+        end
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #23: 3 nested loops with branches
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 23: 3 nested loops with branches");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+
+        // Unique PHT indices
+        thisPC1 = 0;
+        thisPC2 = 4;
+        thisPC3 = 20;
+        thisPC4 = 140;
+        thisPC5 = 200;
+        thisPC6 = 252;
+
+        // Structure ------
+        // --- Loop (PC) 1 (3 iterations)
+        //     Branch 1 (T -> T -> NT)
+        //     |__Loop (PC) 2 (3 iterations)
+        //        Branch 2 (NT -> T -> NT)
+        //       |__Loop (PC) 3 (4 iterations)
+        //          Branch 3 (T -> T -> NT -> T)
+
+        // Loop 1 it 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 1 it 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC2);
+
+        // --- Loop 2 it 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // --- Branch 2 it 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 10, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // --- Loop 2 it 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // --- Branch 2 it 2: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC4);
+
+        // ------- Loop 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+        
+        // --- Loop 2 it 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 3: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+        
+
+
+        // Loop 1 it 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 1 it 2: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC2);
+
+        // --- Loop 2 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // --- Loop 2 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 2: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC4);
+
+        // ------- Loop 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // --- Loop 2 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 3: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+
+
+        // Loop 1 it 3: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC1);
+
+        // Branch 1 it 3: Predict T on counter = 10, update with NT
+        predict_and_update(y, y, thisPC2);
+
+        // --- Loop 2 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 1: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // --- Loop 2 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 2: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC4);
+
+        // ------- Loop 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // --- Loop 2 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 3: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
 
         delay( $urandom_range(0, 127) );
 
