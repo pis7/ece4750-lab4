@@ -1848,7 +1848,7 @@ module top(  input logic clk, input logic linetrace );
         thisPC2 = 4; // index = 000001
         thisPC3 = 20; // index = 000101
         thisPC4 = 140; // index = 100011
-        thisPC5 = 200; // index = 100011
+        thisPC5 = 200; // index = 110010
         thisPC6 = 252; // index = 111111
 
         // Structure ------
@@ -1858,6 +1858,298 @@ module top(  input logic clk, input logic linetrace );
         //        Branch 2 (NT -> T -> NT)
         //       |__Loop (PC) 3 (4 iterations)
         //          Branch 3 (T -> T -> NT -> T)
+
+        // Loop 1 it 1, GHR = 000000, PHT_index = 000000: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 1 it 1, GHR = 000001, PHT_index = 000000: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC2);
+
+        // --- Loop 2 it 1, GHR = 000011, PHT_index = 000110: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // --- Branch 2 it 1, GHR = 000111, PHT_index = 100100: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC4);
+                                      
+        // ------- Loop 3 it 1, GHR = 001110, PHT_index = 111100: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 011101, PHT_index = 100010: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+                                      
+        // ------- Loop 3 it 2, GHR = 111011, PHT_index = 001001: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 110111, PHT_index = 001000: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+                                      
+        // ------- Loop 3 it 3, GHR = 101111, PHT_index = 011101: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 011111, PHT_index = 100000: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC6);
+                                      
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // --- Loop 2 it 2, GHR = 111011, PHT_index = 111110: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // --- Branch 2 it 2, GHR = 110111, PHT_index = 010100: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC4);
+
+        // ------- Loop 3 it 1, GHR = 101111, PHT_index = 011101: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 011111, PHT_index = 100000: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 2, GHR = 111111, PHT_index = 001101: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 111111, PHT_index = 000000: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3, GHR = 111111, PHT_index = 001101: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 111111, PHT_index = 000000: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+                                      
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC6);
+                                  
+        // --- Loop 2 it 3, GHR = 111011, PHT_index = 111110: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC3);
+                                    
+        // --- Branch 2 it 3, GHR = 110111, PHT_index = 010100: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC4);
+                                      
+        // ------- Loop 3 it 1, GHR = 101110, PHT_index = 011100: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 011101, PHT_index = 100010: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 2, GHR = 111011, PHT_index = 001001: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 110111, PHT_index = 001000: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 3, GHR = 101111, PHT_index = 011101: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 011111, PHT_index = 100000: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC6);
+
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+        
+
+
+        // Loop 1 it 2, GHR = 111011, PHT_index = 111011: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 1 it 2, GHR = 110111, PHT_index = 110110: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC2);
+                                  
+        // --- Loop 2 it 1, GHR = 101111, PHT_index = 101010: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC3);
+
+        // --- Branch 2 it 1, GHR = 011111, PHT_index = 111100: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1, GHR = 111110, PHT_index = 001100: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 111101, PHT_index = 000010: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2, GHR = 111011, PHT_index = 001001: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 110111, PHT_index = 001000: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3, GHR = 101111, PHT_index = 011101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 011111, PHT_index = 100000: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC6);
+
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // --- Loop 2 it 2, GHR = 111011, PHT_index = 111110: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 2, GHR = 110111, PHT_index = 010100: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC4);
+
+        // ------- Loop 3 it 1, GHR = 101111, PHT_index = 011101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 011111, PHT_index = 100000: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 2, GHR = 111111, PHT_index = 001101: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 111111, PHT_index = 000000: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3, GHR = 111111, PHT_index = 001101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 111111, PHT_index = 000000: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // --- Loop 2 it 3, GHR = 111011, PHT_index = 111110: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 3, GHR = 110111, PHT_index = 010100: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1, GHR = 101110, PHT_index = 011100: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 011101, PHT_index = 100010: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2, GHR = 111011, PHT_index = 001001: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 110111, PHT_index = 001000: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+                                      
+        // ------- Loop 3 it 3, GHR = 101111, PHT_index = 011101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 011111, PHT_index = 100000: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC6);
+
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+
+
+        // Loop 1 it 3, GHR = 111011, PHT_index = 111011: Predict NT on counter = 01, update with T
+        predict_and_update(n, y, thisPC1);
+
+        // Branch 1 it 3, GHR = 110111, PHT_index = 110110: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC2);
+
+        // --- Loop 2 it 1, GHR = 101110, PHT_index = 101011: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC3);
+                                     
+        // --- Branch 2 it 1, GHR = 011101, PHT_index = 111110: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC4);
+                                      
+        // ------- Loop 3 it 1, GHR = 111010, PHT_index = 001000: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 110101, PHT_index = 001010: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 2, GHR = 101011, PHT_index = 011001: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 010111, PHT_index = 101000: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 3, GHR = 101111, PHT_index = 011101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 011111, PHT_index = 100000: Predict NT on counter = 00, update with NT
+        predict_and_update(n, n, thisPC6);
+
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // --- Loop 2 it 2, GHR = 111011, PHT_index = 111110: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 2, GHR = 110111, PHT_index = 010100: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC4);
+
+        // ------- Loop 3 it 1, GHR = 101111, PHT_index = 011101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 011111, PHT_index = 100000: Predict NT on counter = 00, update with T
+        predict_and_update(n, y, thisPC6);
+
+        // ------- Loop 3 it 2, GHR = 111111, PHT_index = 001101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 111111, PHT_index = 000000: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3, GHR = 111111, PHT_index = 001101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 111111, PHT_index = 000000: Predict T on counter = 11, update with NT
+        predict_and_update(y, n, thisPC6);
+
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // --- Loop 2 it 3, GHR = 111011, PHT_index = 111110: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC3);
+
+        // --- Branch 2 it 3, GHR = 110111, PHT_index = 010100: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC4);
+
+        // ------- Loop 3 it 1, GHR = 101110, PHT_index = 011100: Predict T on counter = 10, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 1, GHR = 011101, PHT_index = 100010: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 2, GHR = 111011, PHT_index = 001001: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 2, GHR = 110111, PHT_index = 001000: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
+
+        // ------- Loop 3 it 3, GHR = 101111, PHT_index = 011101: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 3, GHR = 011111, PHT_index = 100000: Predict NT on counter = 01, update with NT
+        predict_and_update(n, n, thisPC6);
+
+        // ------- Loop 3 it 4, GHR = 111110, PHT_index = 001100: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC5);
+
+        // ------- Branch 3 it 4, GHR = 111101, PHT_index = 000010: Predict T on counter = 11, update with T
+        predict_and_update(y, y, thisPC6);
 
         delay( $urandom_range(0, 127) );
 
@@ -1894,7 +2186,7 @@ module top(  input logic clk, input logic linetrace );
     );
     begin
         assert(prediction == t_prediction) begin
-            $display("prediction is correct.  Expected: %h, Actual: %h", t_prediction,prediction);
+            //$display("prediction is correct.  Expected: %h, Actual: %h", t_prediction,prediction);
             pass();
         end else begin
             $display("prediction is incorrect.  Expected: %h, Actual: %h", t_prediction,prediction); fail(); $finish();

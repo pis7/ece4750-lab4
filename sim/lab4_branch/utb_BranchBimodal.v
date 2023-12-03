@@ -1444,7 +1444,7 @@ module top(  input logic clk, input logic linetrace );
         // ------- Branch 3 it 1: Predict T on counter = 10, update with T
         predict_and_update(y, y, thisPC6);
 
-        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        // ------- Loop 3 it 2: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC5);
 
         // ------- Branch 3 it 2: Predict T on counter = 11, update with T
@@ -1474,7 +1474,7 @@ module top(  input logic clk, input logic linetrace );
         // ------- Branch 3 it 1: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC6);
 
-        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        // ------- Loop 3 it 2: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC5);
 
         // ------- Branch 3 it 2: Predict T on counter = 11, update with T
@@ -1512,7 +1512,7 @@ module top(  input logic clk, input logic linetrace );
         // ------- Branch 3 it 1: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC6);
 
-        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        // ------- Loop 3 it 2: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC5);
 
         // ------- Branch 3 it 2: Predict T on counter = 11, update with T
@@ -1542,7 +1542,7 @@ module top(  input logic clk, input logic linetrace );
         // ------- Branch 3 it 1: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC6);
 
-        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        // ------- Loop 3 it 2: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC5);
 
         // ------- Branch 3 it 2: Predict T on counter = 11, update with T
@@ -1572,7 +1572,7 @@ module top(  input logic clk, input logic linetrace );
         // ------- Branch 3 it 1: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC6);
 
-        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        // ------- Loop 3 it 2: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC5);
 
         // ------- Branch 3 it 2: Predict T on counter = 11, update with T
@@ -1596,7 +1596,7 @@ module top(  input logic clk, input logic linetrace );
         predict_and_update(y, y, thisPC1);
 
         // Branch 1 it 3: Predict T on counter = 10, update with NT
-        predict_and_update(y, y, thisPC2);
+        predict_and_update(y, n, thisPC2);
 
         // --- Loop 2 it 1: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC3);
@@ -1610,7 +1610,7 @@ module top(  input logic clk, input logic linetrace );
         // ------- Branch 3 it 1: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC6);
 
-        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        // ------- Loop 3 it 2: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC5);
 
         // ------- Branch 3 it 2: Predict T on counter = 11, update with T
@@ -1640,7 +1640,7 @@ module top(  input logic clk, input logic linetrace );
         // ------- Branch 3 it 1: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC6);
 
-        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        // ------- Loop 3 it 2: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC5);
 
         // ------- Branch 3 it 2: Predict T on counter = 11, update with T
@@ -1670,7 +1670,7 @@ module top(  input logic clk, input logic linetrace );
         // ------- Branch 3 it 1: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC6);
 
-        // ------- Loop 3 it 2: Predict NT on counter = 11, update with T
+        // ------- Loop 3 it 2: Predict T on counter = 11, update with T
         predict_and_update(y, y, thisPC5);
 
         // ------- Branch 3 it 2: Predict T on counter = 11, update with T
