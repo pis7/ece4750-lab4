@@ -108,13 +108,135 @@ module top(  input logic clk, input logic linetrace );
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
-        // Unit Testing #2 Do not decrement entry if reached limit
+        // Unit Testing #2 Decrement entry if not reached limit
         //--------------------------------------------------------------------
         // Initalize all the signal inital values.
 
         $display("");
         $display("---------------------------------------");
-        $display("Unit Test 2: Do not decrement entry if reached limit");
+        $display("Unit Test 2: Decrement entry if not reached limit");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+        //         upd  PC            upd   inc  dec         
+        //         val                ghr   ent  ent
+        //
+        set_inputs(n,   32'hFFFFFFFF, n,    n,   n);
+
+        $display("");
+        $display("Waiting for inc/dec signal");
+        delay( $urandom_range(0, 127) );
+
+        @(negedge clk);
+        //           prd  ent  ent  pht         
+        //                upp  low  idx
+        //                rcd  rcd
+        test_outputs(n,   n,   y,   11'b11111111111);
+
+        $display("");
+        $display("Received increment signal");
+        @(negedge clk);
+        //         upd  PC            upd   inc  dec         
+        //         val                ghr   ent  ent
+        //
+        set_inputs(n,   32'hFFFFFFFF, n,    y,   n);
+
+        @(negedge clk);
+        //           prd  ent  ent  pht         
+        //                upp  low  idx
+        //                rcd  rcd
+        test_outputs(n,   n,   n,   11'b11111111111);
+
+        //         upd  PC            upd   inc  dec         
+        //         val                ghr   ent  ent
+        //
+        set_inputs(n,   32'hFFFFFFFF, n,    n,   n);
+
+        $display("");
+        $display("Received decrement signal");
+        delay( $urandom_range(0, 127) );
+        
+        @(negedge clk);
+        //         upd  PC            upd   inc  dec         
+        //         val                ghr   ent  ent
+        //
+        set_inputs(n,   32'hFFFFFFFF, n,    n,   y);
+
+        @(negedge clk);
+        //           prd  ent  ent  pht         
+        //                upp  low  idx
+        //                rcd  rcd
+        test_outputs(n,   n,   y,   11'b11111111111);
+
+        //         upd  PC            upd   inc  dec         
+        //         val                ghr   ent  ent
+        //
+        set_inputs(n,   32'hFFFFFFFF, n,    n,   n);
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #3 Upper limit set if counter = 2'b11
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 3: Upper limit set if counter = 2'b11");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+        //         upd  PC     upd   inc  dec         
+        //         val         ghr   ent  ent
+        //
+        set_inputs(y,   32'd0, n,    n,   n);
+
+        $display("");
+        $display("Waiting for inc/dec signal");
+        delay( $urandom_range(0, 127) );
+
+        @(negedge clk);
+        //           prd  ent  ent  pht         
+        //                upp  low  idx
+        //                rcd  rcd
+        test_outputs(n,   n,   y,   11'b00000000000);
+
+        $display("");
+        $display("Received increment signal");
+        for (int i = 0; i < 14; i++) begin
+            @(negedge clk);
+            //         upd  PC     upd   inc  dec         
+            //         val         ghr   ent  ent
+            //
+            set_inputs(y,   32'd0, y,    y,   n);
+        end
+
+        @(negedge clk);
+        //           prd  ent  ent  pht         
+        //                upp  low  idx
+        //                rcd  rcd
+        test_outputs(y,   y,   n,   11'b11111111111);
+        
+
+        //         upd  PC     upd   inc  dec         
+        //         val         ghr   ent  ent
+        //
+        set_inputs(n,   32'd0, n,    n,   n);
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #4 Do not decrement entry if reached limit
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 4: Do not decrement entry if reached limit");
         $display("---------------------------------------");
 
         reset = 1;

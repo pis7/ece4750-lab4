@@ -139,6 +139,11 @@ module top(  input logic clk, input logic linetrace );
         //                rcd  rcd
         test_outputs(n,   n,   y);
 
+        //         PC      inc  dec         
+        //                 ent  ent
+        //
+        set_inputs(32'd0,  n,   n);
+
         delay( $urandom_range(0, 127) );
 
         //--------------------------------------------------------------------
@@ -184,6 +189,74 @@ module top(  input logic clk, input logic linetrace );
         //                upp  low
         //                rcd  rcd
         test_outputs(y,   y,   n);
+
+        //         PC      inc  dec         
+        //                 ent  ent
+        //
+        set_inputs(32'd0,  n,   n);
+
+        delay( $urandom_range(0, 127) );
+
+        //--------------------------------------------------------------------
+        // Unit Testing #4 Do not decrement entry if reached limit
+        //--------------------------------------------------------------------
+        // Initalize all the signal inital values.
+
+        $display("");
+        $display("---------------------------------------");
+        $display("Unit Test 4: Do not decrement entry if reached limit");
+        $display("---------------------------------------");
+
+        reset = 1;
+        @(negedge clk);
+        reset = 0;
+        //         PC      inc  dec         
+        //                 ent  ent
+        //
+        set_inputs(32'd0,  n,   n);
+
+        $display("");
+        $display("Waiting for inc/dec signal");
+        delay( $urandom_range(0, 127) );
+
+        @(negedge clk);
+        //           prd  ent  ent           
+        //                upp  low
+        //                rcd  rcd
+        test_outputs(n,   n,   y);
+
+        $display("");
+        $display("Received increment signal");
+        @(negedge clk);
+        //         PC      inc  dec         
+        //                 ent  ent
+        //
+        set_inputs(32'd0,  y,   n);
+
+        @(negedge clk);
+        //           prd  ent  ent           
+        //                upp  low
+        //                rcd  rcd
+        test_outputs(n,   n,   n);
+
+        //         PC      inc  dec         
+        //                 ent  ent
+        //
+        set_inputs(32'd0,  n,   n);
+
+        $display("");
+        $display("Decrement entry, lower limit should be set");
+        @(negedge clk);
+        //         PC      inc  dec         
+        //                 ent  ent
+        //
+        set_inputs(32'd0,  n,   y);
+
+        @(negedge clk);
+        //           prd  ent  ent           
+        //                upp  low
+        //                rcd  rcd
+        test_outputs(n,   n,   y);
 
         delay( $urandom_range(0, 127) );
 
