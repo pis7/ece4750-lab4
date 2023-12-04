@@ -7,8 +7,8 @@ module lab4_branch_BranchBimodalDpath
   parameter PHT_size  = 2048
 )
 (
-  input  logic         clk,
-  input  logic         reset,
+  input  logic clk,
+  input  logic reset,
   input  logic[31:0] PC,
   output logic prediction,
 
@@ -25,7 +25,7 @@ module lab4_branch_BranchBimodalDpath
 localparam pc_index_length = $clog2(PHT_size);
 
 // Counts array
-logic [PHT_size-1:0][1:0] counts;
+logic [PHT_size-1:0][1:0] counts; // May not be fully toggled
 
 // PC index
 logic [pc_index_length-1:0] pc_index;

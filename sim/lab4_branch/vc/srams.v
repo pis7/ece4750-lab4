@@ -54,7 +54,7 @@ module vc_CombinationalBitSRAM_1rw
 
   always_ff @(posedge clk) begin
     if (write_en)
-      mem[write_addr] <= write_data;
+      mem[write_addr] = write_data;
   end
 
   // Assertions

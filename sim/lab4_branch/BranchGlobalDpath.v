@@ -7,8 +7,8 @@ module lab4_branch_BranchGlobalDpath
   parameter PHT_size  = 2048
 )
 (
-  input  logic         clk,
-  input  logic         reset,
+  input  logic clk,
+  input  logic reset,
   input  logic update_val,
   output logic prediction,
 
@@ -26,7 +26,7 @@ module lab4_branch_BranchGlobalDpath
 localparam ghr_length = $clog2(PHT_size);
 
 // Counts array
-logic [PHT_size-1:0][1:0] counts;
+logic [PHT_size-1:0][1:0] counts; // May not be fully toggled
 
 // Global register
 logic [ghr_length-1:0] ghr;
